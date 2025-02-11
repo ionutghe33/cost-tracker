@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Setează Bugetul Total</h1>
+<form method="POST" class="mt-4">
+    <div class="mb-3">
+        <label for="budget" class="form-label">Introduceți bugetul total:</label>
+        <input type="number" class="form-control" id="budget" name="budget" step="0.01" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Setează</button>
+</form>
+{% endblock %}

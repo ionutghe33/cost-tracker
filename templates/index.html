@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Bun venit la Cost Tracker</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Înregistrare</h3>
+            <form method="POST">
+                <input type="hidden" name="action" value="register">
+                <div class="mb-3">
+                    <label class="form-label">Nume utilizator</label>
+                    <input type="text" class="form-control" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Parolă</label>
+                    <input type="password" class="form-control" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-success">Înregistrează-te</button>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <h3>Autentificare</h3>
+            <form method="POST">
+                <input type="hidden" name="action" value="login">
+                <div class="mb-3">
+                    <label class="form-label">Nume utilizator</label>
+                    <input type="text" class="form-control" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Parolă</label>
+                    <input type="password" class="form-control" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Autentifică-te</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

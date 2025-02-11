@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Dashboard</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Setează Bugetul</h4>
+            <form method="POST">
+                <input type="hidden" name="action" value="set_budget">
+                <div class="mb-3">
+                    <label class="form-label">Buget Total (RON)</label>
+                    <input type="number" step="0.01" class="form-control" name="total_budget" value="{{ budget.total_budget if budget else '' }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Salvează</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Adaugă Cheltuială</h4>
+            <form method="POST">
+                <input type="hidden" name="action" value="add_expense">
+                <div class="mb-3">
+                    <label class="form-label">Nume</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Sumă (RON)</label>
+                    <input type="number" step="0.01" class="form-control" name="amount" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Categorie</label>
+                    <select class="form-control" name="category" required>
+                        <option>Mâncare</option>
+                        <option>Chirie</option>
+                        <option>Facturi</option>
+                        <option>Combustibil</option>
+                        <option>Economii</option>
+                        <option>Altele</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Adaugă</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Buget</h4>
+            <p><strong>Buget Total:</strong> {{ budget.total_budget if budget else 0 }} RON</p>
+            <p><strong>Buget Rămas:</strong> {{ budget_remaining }} RON</p>
+        </div>
+    </div>
+
+    <h4 class="mt-4">Cheltuieli</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nume</th>
+                <th>Sumă (RON)</th>
+                <th>Categorie</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.name }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.category }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
